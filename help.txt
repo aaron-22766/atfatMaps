@@ -1,0 +1,53 @@
+usage: atfatMaps [-h] [-v] [-w WIDTH] [-h HEIGHT] [-c COLLECTIBLES]
+                 [-e ENEMIES] [-s SEED] [-p PATH] [-i INVALID_CODE]
+                 [file]
+
+atfatMaps (And Thanks For All The Maps) is a program that
+handles and generates maps for the so_long project.
+
+Optional flags:
+  -h, --help     Show this help message and exit
+  -v, --verbose  If present, verbose mode will print the map,
+                 its source and its specs
+
+Read map from existing file:
+  [file]         Path to an already existing map file.
+                 If present, the use of any of the
+                 generation flags below is prohibited.
+
+Generate new map with any combination of these optional flags:
+  -w WIDTH, --width WIDTH
+                 If present, this argument sets the width for the generated map
+                 (3 - 255) && (width * height > 14)
+  -h HEIGHT, --height HEIGHT
+                 If present, this argument sets the height for the generated map
+                 (3 - 255) && (width * height > 14)
+  -c COLLECTIBLES, --collectibles COLLECTIBLES
+                 If present, this argument sets the amount of collectibles
+                 for the generated map (1 - 255)
+  -e ENEMIES, --enemies ENEMIES
+                 If present, this argument sets the amount of enemies
+                 for the generated map (0 - 255)
+  -s SEED, --seed SEED
+                 If present, this argument sets the seed for the generated map.
+                 Otherwise, a random seed will be used.
+  -p PATH, --path PATH
+                 If present, the generated map will be saved to a file at the
+                 specified path. If the path is a directory, a .ber file with
+                 the seed as the name will be created.
+                 If not present, the map will be printed to STDOUT.
+  -i INVALID_CODE, --invalid INVALID_CODE
+                 If present, an invalid map will be generated.
+                 One of the following INVALID_CODEs can be chosen:
+                    IE = invalid file extension
+                    EF = empty file
+                    EL = empty line
+                    NR = not rectangular
+                    NW = not completely surrounded by walls
+                    NP = no path to all collectibles or exit
+                    MP = missing player
+                    ME = missing exit
+                    MC = missing coins
+                    EP = extra players
+                    EE = extra exits
+                    EC = extra/invalid character

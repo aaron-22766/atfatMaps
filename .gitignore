@@ -1,0 +1,6 @@
+*
+!src
+!src/*
+!help.txt
+!Makefile
+!.gitignore
