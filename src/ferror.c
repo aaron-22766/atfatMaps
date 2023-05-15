@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:59:12 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/11 10:53:09 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:31:30 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	ft_free_seed(t_input *input)
 		free(input->seed);
 }
 
-void	ft_ferror(t_input *input, char **map, char err)
+void	ft_ferror(t_data *data, char err)
 {
-	ft_free_map(map);
-	ft_free_seed(input);
+	ft_free_map(data->map.map);
+	ft_free_seed(&data->input);
 	ft_error(err);
 }

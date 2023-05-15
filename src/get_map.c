@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:39:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/10 14:04:29 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:51:25 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,58 @@ static char	**ft_realloc_map(char **ptr, size_t count)
 	return (new);
 }
 
-char	**ft_get_map(char *path)
+static void	ft_read_map(t_data *data)
 {
 	int		fd;
-	char	**map;
 	char	*nl;
 	size_t	i;
 
-	fd = open(path, O_RDONLY);
+	fd = open(data->input.path, O_RDONLY);
 	if (fd == -1)
 		ft_error(ERR_READ_FROM_FILE);
-	map = 0;
 	i = -1;
 	while (1)
 	{
-		map = ft_realloc_map(map, ++i + 2);
-		if (!map)
-			return (NULL);
-		map[i] = get_next_line(fd);
-		if (!map[i])
+		data->map.map = ft_realloc_map(data->map.map, ++i + 2);
+		if (!data->map.map)
+		{
+			close(fd);
+			ft_ferror(data, ERR_MEM);
+		}
+		data->map.map[i] = get_next_line(fd);
+		if (!data->map.map[i])
 			break ;
-		nl = ft_strchr(map[i], '\n');
+		nl = ft_strchr(data->map.map[i], '\n');
 		if (nl)
 			nl[0] = 0;
 	}
 	close(fd);
-	return (map);
+}
+
+static void	ft_measure_map(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (map->map[++i])
+	{
+		j = -1;
+		while (map->map[i][++j])
+		{
+			if (map->map[i][j] == COLLECTIBLE)
+				map->collects++;
+			else if (map->map[i][j] == ENEMY)
+				map->enemies++;
+		}
+		if (j > map->width)
+			map->width = j;
+	}
+	map->height = i;
+}
+
+void	ft_get_map(t_data *data)
+{
+	ft_read_map(data);
+	ft_measure_map(&data->map);
 }

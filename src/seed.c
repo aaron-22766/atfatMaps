@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 09:40:40 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/11 12:57:42 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:36:29 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,9 @@ static void	ft_set_seed(t_input *input)
 	srand(seed);
 }
 
-static void	ft_set_input(t_input *input)
-{
-	if (!input->width)
-		input->width = 5 + rand() % 35;
-	if (!input->height)
-		input->height = 5 + rand() % 35;
-	if (!input->collects)
-		input->collects = 1 + rand() % ft_sqrt(input->width * input->height);
-	if (!input->enemies)
-		input->enemies = rand() % (ft_sqrt(input->width * input->height) - 4);
-}
-
 void	ft_seed(t_input *input)
 {
 	if (input->random_seed)
 		ft_get_random_seed(input);
 	ft_set_seed(input);
-	ft_set_input(input);
 }

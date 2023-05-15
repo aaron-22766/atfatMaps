@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:14:41 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/11 15:18:29 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:53:04 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,32 @@ enum e_errors
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
+typedef struct s_map
+{
+	int		width;
+	int		height;
+	int		collects;
+	int		enemies;
+	char	**map;
+}	t_map;
+
 typedef struct s_input
 {
-	bool			help;
-	bool			verbose;
-	bool			random_seed;
-	unsigned char	width;
-	unsigned char	height;
-	unsigned char	collects;
-	unsigned char	enemies;
-	char			*file;
-	char			*seed;
-	char			*path;
-	char			*invalid;
+	bool	help;
+	bool	verbose;
+	bool	random_seed;
+	t_map	map_input;
+	char	*file;
+	char	*seed;
+	char	*path;
+	char	*invalid;
 }	t_input;
+
+typedef struct s_data
+{
+	t_input	input;
+	t_map	map;
+}	t_data;
 
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
@@ -76,32 +88,35 @@ typedef struct s_input
 // atfatMaps.c
 char		**atfatmaps(int argc, char **argv);
 
+// init.c
+void		ft_init_map(t_map *map);
+void		ft_init_input(t_input *input);
+
 // input.c
 void		ft_get_input(t_input *input, int argc, char **argv);
 
 // get_map.c
-char		**ft_get_map(char *path);
+void		ft_get_map(t_data *data);
 
 // seed.c
 void		ft_seed(t_input *input);
 
 // generate_map.c
-char		**ft_generate_map(t_input *input);
+void		ft_generate_map(t_data *data);
 
 // generate_maze.c
-void		ft_generate_maze(t_input *input, char **map);
+void		ft_generate_maze(t_data *data);
 
 // generation_utils.c
-bool		ft_pos_has_walls(t_input *input, char **map, int min_walls,
-				int pos);
-int			ft_count_pos_with_walls(t_input *input, char **map, int min_walls);
-int			ft_get_random_pos(t_input *input, char **map, int min_walls);
+bool		ft_pos_has_walls(t_map *map, int min_walls, int pos);
+int			ft_count_pos_with_walls(t_map *map, int min_walls);
+int			ft_get_random_pos(t_data *data, int min_walls);
 
 // ferror.c
 void		ft_error(char err);
 void		ft_free_map(char **map);
 void		ft_free_seed(t_input *input);
-void		ft_ferror(t_input *input, char **map, char err);
+void		ft_ferror(t_data *data, char err);
 
 // utils.c
 void		ft_print_map(char **map);
