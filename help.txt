@@ -38,7 +38,8 @@ Generate new map with any combination of these optional flags:
                  If not present, the map will be printed to STDOUT.
   -i INVALID_CODE, --invalid INVALID_CODE
                  If present, an invalid map will be generated.
-                 One of the following INVALID_CODEs can be chosen:
+                 Any combination of the following INVALID_CODEs
+                 (separated by any symbol) can be chosen:
                     IE = invalid file extension
                     EF = empty file
                     EL = empty line

@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:53:08 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/15 10:59:12 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:35:55 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ static void	ft_get_string_flags(t_input *input, char flag, char *next_arg)
 		|| (flag == 'i' && input->invalid))
 		ft_error(ERR_ARG_DUPLICATE);
 	if (flag == 'p')
+	{
+		if (!ft_strnstr(next_arg, ".ber", ft_strlen(next_arg))
+			&& next_arg[ft_strlen(next_arg) - 1] != '/')
+			ft_error(ERR_INVALID_PATH);
 		input->path = next_arg;
+	}
 	else if (flag == 's')
 		input->seed = next_arg;
 	else if (flag == 'i')
@@ -119,9 +124,13 @@ void	ft_get_input(t_input *input, int argc, char **argv)
 			input->file = argv[i];
 		}
 	}
-	if (input->file && (input->map_input.width || input->map_input.height
-			|| input->map_input.collects || input->map_input.enemies
-			|| input->path || input->seed || input->invalid))
+	if (input->file && (input->path || input->seed || input->invalid
+			|| input->map_input.width != -1 || input->map_input.height != -1
+			|| input->map_input.collects != -1
+			|| input->map_input.enemies != -1))
 		ft_error(ERR_ARG_MIXED);
+	if (input->map_input.width > 0 && input->map_input.height > 0
+		&& input->map_input.width * input->map_input.height <= 14)
+		ft_error(ERR_TOO_SMALL);
 	input->random_seed = !input->seed;
 }

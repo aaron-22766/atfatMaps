@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:39:05 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/15 10:51:25 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:27:32 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_read_map(t_data *data)
 	char	*nl;
 	size_t	i;
 
-	fd = open(data->input.path, O_RDONLY);
+	fd = open(data->input.file, O_RDONLY);
 	if (fd == -1)
 		ft_error(ERR_READ_FROM_FILE);
 	i = -1;

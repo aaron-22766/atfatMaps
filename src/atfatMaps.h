@@ -6,7 +6,7 @@
 /*   By: arabenst <arabenst@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:14:41 by arabenst          #+#    #+#             */
-/*   Updated: 2023/05/15 10:53:04 by arabenst         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:50:54 by arabenst         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <time.h>
+# include <string.h>
+# include <sys/errno.h>
 # include "../lib/libft/libft.h"
 
 /* ************************************************************************** */
@@ -34,6 +36,7 @@
 # define COLLECTIBLE 'C'
 # define EXIT 'X'
 # define ENEMY 'E'
+# define UNVISITED ' '
 
 # define RETURN_SUCCESS 0
 # define RETURN_FAILURE 1
@@ -47,7 +50,9 @@ enum e_errors
 	ERR_MEM,
 	ERR_READ_FROM_FILE,
 	ERR_ARG_MIXED,
-	ERR_ARG_DUPLICATE
+	ERR_ARG_DUPLICATE,
+	ERR_TOO_SMALL,
+	ERR_INVALID_PATH
 };
 
 /* ************************************************************************** */
@@ -89,8 +94,7 @@ typedef struct s_data
 char		**atfatmaps(int argc, char **argv);
 
 // init.c
-void		ft_init_map(t_map *map);
-void		ft_init_input(t_input *input);
+void		ft_init_data(t_data *data);
 
 // input.c
 void		ft_get_input(t_input *input, int argc, char **argv);
@@ -105,15 +109,15 @@ void		ft_seed(t_input *input);
 void		ft_generate_map(t_data *data);
 
 // generate_maze.c
-void		ft_generate_maze(t_data *data);
+void		ft_generate_maze(t_map *map);
 
-// generation_utils.c
-bool		ft_pos_has_walls(t_map *map, int min_walls, int pos);
-int			ft_count_pos_with_walls(t_map *map, int min_walls);
-int			ft_get_random_pos(t_data *data, int min_walls);
+// invalid.c
+void		ft_apply_invalid(t_data *data);
 
-// ferror.c
+// error.c
 void		ft_error(char err);
+
+// free.c
 void		ft_free_map(char **map);
 void		ft_free_seed(t_input *input);
 void		ft_ferror(t_data *data, char err);
